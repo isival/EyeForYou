@@ -20,23 +20,13 @@ sys.path.append('./object_detection/')
 from yolo import yolo
 
 
-############## Text Recognition ################
-
 def read_text(image):
     return (image, [])
 
 
-################################################
-
-############## obstacle Recognition ############
-
 def obstacle_recognition(image):
     return (image, [])
 
-
-################################################
-
-############## Face Recognition ################
 
 def face_recognition(image):
     return (image, [])
@@ -46,7 +36,6 @@ def do_nothing(image):
     return (image, [])
 
 
-################################################
 def say(text):
     '''engine = pyttsx3.init()
     engine.say("Object Recognized " + text)
@@ -60,6 +49,24 @@ def say(text):
     # print voice.id
     engine.say('Object Recognized' + text)
     a = engine.runAndWait()  # blocks
+
+
+functions = {'read Text': read_Text, 'obstacle Recognition': yolo, 'Face Recognition': Face_Recognition,
+             'Do Nothing': Do_Nothing}
+
+
+def get_key_pressed():
+    """
+    Return the mode selected depending on the key pressed
+    """
+    if keyboard.is_pressed('a'):
+        return 'read_text'
+    elif keyboard.is_pressed('z'):
+        return 'obstacle_recognition'
+    elif keyboard.is_pressed('e'):
+        return 'face_recognition'
+    elif keyboard.is_pressed('r'):
+        return 'nothing'
 
 
 if __name__ == '__main__':
@@ -87,21 +94,10 @@ if __name__ == '__main__':
     while True:
         # Capturing the frame:
         ret_val, image = cam.read()
-        ################### Inputs #####################
-
-        if keyboard.is_pressed('a'):
-            Mode = 'read Text'
-        elif keyboard.is_pressed('z'):
-            Mode = 'obstacle Recognition'
-        elif keyboard.is_pressed('e'):
-            Mode = 'Face Recognition'
-
-        elif keyboard.is_pressed('r'):
-            Mode = 'Do Nothing'
-        Functions = {'read Text': read_Text, 'obstacle Recognition': yolo, 'Face Recognition': Face_Recognition,
-                     'Do Nothing': Do_Nothing}
+        # Get the mode of treatment
+        mode = get_key_pressed()
         if frames_counter % 3 == 0:
-            output, textes = Functions[Mode](image)
+            output, textes = function[Mode](image)
 
             cv2.putText(output, "FPS: %f Mode Detection : %s" % ((1.0 / (time.time() - fps_time)), Mode), (10, 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
