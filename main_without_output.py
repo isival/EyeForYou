@@ -21,19 +21,22 @@ from yolo import yolo
 
 
 def read_text(image):
-    return (image, [])
+    """Read text contained in image and return it in readable format"""
+    return None
 
 
 def obstacle_recognition(image):
-    return (image, [])
+    """Detect obstacles in image and return description"""
+    return None
 
 
 def face_recognition(image):
-    return (image, [])
+    """Detect faces and recognize them, return description"""
+    return None
 
 
-def do_nothing(image):
-    return (image, [])
+def nothing(image):
+    return None
 
 
 def say(text):
