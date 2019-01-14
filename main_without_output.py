@@ -22,15 +22,15 @@ from yolo import yolo
 
 ############## Text Recognition ################
 
-def Read_Text(image):
+def read_text(image):
     return (image, [])
 
 
 ################################################
 
-############## Obstacle Recognition ############
+############## obstacle Recognition ############
 
-def Obstacle_Recognition(image):
+def obstacle_recognition(image):
     return (image, [])
 
 
@@ -38,11 +38,11 @@ def Obstacle_Recognition(image):
 
 ############## Face Recognition ################
 
-def Face_Recognition(image):
+def face_recognition(image):
     return (image, [])
 
 
-def Do_Nothing(image):
+def do_nothing(image):
     return (image, [])
 
 
@@ -90,15 +90,15 @@ if __name__ == '__main__':
         ################### Inputs #####################
 
         if keyboard.is_pressed('a'):
-            Mode = 'Read Text'
+            Mode = 'read Text'
         elif keyboard.is_pressed('z'):
-            Mode = 'Obstacle Recognition'
+            Mode = 'obstacle Recognition'
         elif keyboard.is_pressed('e'):
             Mode = 'Face Recognition'
 
         elif keyboard.is_pressed('r'):
             Mode = 'Do Nothing'
-        Functions = {'Read Text': Read_Text, 'Obstacle Recognition': yolo, 'Face Recognition': Face_Recognition,
+        Functions = {'read Text': read_Text, 'obstacle Recognition': yolo, 'Face Recognition': Face_Recognition,
                      'Do Nothing': Do_Nothing}
         if frames_counter % 3 == 0:
             output, textes = Functions[Mode](image)
