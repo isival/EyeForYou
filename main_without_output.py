@@ -8,6 +8,10 @@ import logging
 import pyttsx3
 import sys
 
+## OpenCV constant initialization
+font = cv2.FONT_HERSHEY_SIMPLEX
+green = (0, 255, 0)
+
 logger = logging.getLogger('Eye For You Webcam')
 logger.setLevel(logging.DEBUG)
 ch = logging.StreamHandler()
@@ -105,10 +109,8 @@ if __name__ == '__main__':
         mode = get_key_pressed()
         if frames_counter % 3 == 0:
             output, texts = applications[mode](image)
-
-            fps = 1.0/(now - fps_time)
-            cv2.putText(output, "FPS: %f Mode Detection : %s" % (fps, mode), (10, 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+            fps = 1.0 / (now - fps_time)
+            cv2.putText(output, "FPS: %f Mode Detection : %s" % (fps, mode), (10, 10), font, 0.5, green, 2)
             cv2.imshow('computation result', output)
             print(texts)
 
