@@ -51,8 +51,12 @@ def say(text):
     a = engine.runAndWait()  # blocks
 
 
-functions = {'read Text': read_Text, 'obstacle Recognition': yolo, 'Face Recognition': Face_Recognition,
-             'Do Nothing': Do_Nothing}
+applications = {
+    "read_text": read_text,
+    "obstacle_recognition": obstacle_recognition,
+    "face_recognition": face_recognition,
+    "nothing": nothing
+}
 
 
 def get_key_pressed():
@@ -60,24 +64,23 @@ def get_key_pressed():
     Return the mode selected depending on the key pressed
     """
     if keyboard.is_pressed('a'):
-        return 'read_text'
+        return "read_text"
     elif keyboard.is_pressed('z'):
-        return 'obstacle_recognition'
+        return "obstacle_recognition"
     elif keyboard.is_pressed('e'):
-        return 'face_recognition'
+        return "face_recognition"
     elif keyboard.is_pressed('r'):
-        return 'nothing'
+        return "nothing"
 
 
 if __name__ == '__main__':
 
     # All the args argument:
     parser = argparse.ArgumentParser(description='Main-Code')
+    parser.add_argument('--camera', type=bool, default=False, help="True if the webcam should be used")
+    parser.add_argument('--resolution', type=str, default='432x368', help="CNN input resolution. Default: 432x368")
+    parser.add_argument('--save_video', type=bool, default=False, help="Save the video locally")
     # parser.add_argument('--video', type=str, default='')
-    parser.add_argument('--camera', type=int, default=0)
-
-    parser.add_argument('--resolution', type=str, default='432x368', help='network input resolution. default=432x368')
-    parser.add_argument('--save_video', type=str, default='', help='Save in a video format')
     args = parser.parse_args()
 
     # cap = cv2.VideoCapture(args.video)
@@ -90,34 +93,25 @@ if __name__ == '__main__':
     logger.info('cam image=%dx%d' % (image.shape[1], image.shape[0]))
     frames_counter = 1
     # Default Mode
-    Mode = 'Do Nothing'
+    mode = "nothing"
     while True:
         # Capturing the frame:
         ret_val, image = cam.read()
         # Get the mode of treatment
         mode = get_key_pressed()
         if frames_counter % 3 == 0:
-            output, textes = function[Mode](image)
+            output, texts = applications[mode](image)
 
             cv2.putText(output, "FPS: %f Mode Detection : %s" % ((1.0 / (time.time() - fps_time)), Mode), (10, 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
             cv2.imshow('computation result', output)
-            print(textes)
-            # for text in textes:
-            # say(text)
+            print(texts)
 
         frames_counter += 1
 
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        ## Leave the loop is q is pressed
+        if (cv2.waitKey(1) & 0xFF) == ord('q'):
             break
 
         fps_time = time.time()
     cv2.destroyAllWindows()
-
-################################################
-
-
-################### Outputs ####################
-
-
-################################################
