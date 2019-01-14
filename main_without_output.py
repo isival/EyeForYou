@@ -26,21 +26,21 @@ from yolo import yolo
 
 def read_text(image):
     """Read text contained in image and return it in readable format"""
-    return None
+    return None, None
 
 
 def obstacle_recognition(image):
     """Detect obstacles in image and return description"""
-    return None
+    return None, None
 
 
 def face_recognition(image):
     """Detect faces and recognize them, return description"""
-    return None
+    return None, None
 
 
 def nothing(image):
-    return None
+    return None, None
 
 
 def say(text):
@@ -104,12 +104,13 @@ if __name__ == '__main__':
     while True:
         now = time.time()
         # Capturing the frame
-        ret_val, image = cam.read()
+        _, image = cam.read()
         # Get the mode of treatment
         mode = get_key_pressed()
         if frames_counter % 3 == 0:
             output, texts = applications[mode](image)
             fps = 1.0 / (now - fps_time)
+            # Show capture info on image
             cv2.putText(output, "FPS: %f Mode Detection : %s" % (fps, mode), (10, 10), font, 0.5, green, 2)
             cv2.imshow('computation result', output)
             print(texts)
