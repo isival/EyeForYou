@@ -82,7 +82,7 @@ def get_key_pressed():
 
 if __name__ == '__main__':
 
-    # All the args argument:
+    # Argument parsing
     parser = argparse.ArgumentParser(description='Main-Code')
     parser.add_argument('--camera', type=bool, default=False, help="True if the webcam should be used")
     parser.add_argument('--resolution', type=str, default='432x368', help="CNN input resolution. Default: 432x368")
@@ -103,7 +103,7 @@ if __name__ == '__main__':
     mode = "nothing"
     while True:
         now = time.time()
-        # Capturing the frame:
+        # Capturing the frame
         ret_val, image = cam.read()
         # Get the mode of treatment
         mode = get_key_pressed()
