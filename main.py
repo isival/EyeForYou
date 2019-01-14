@@ -83,14 +83,14 @@ if __name__ == '__main__':
     parser.add_argument('--camera', type=bool, default=False, help="True if the webcam should be used")
     parser.add_argument('--resolution', type=str, default='432x368', help="CNN input resolution. Default: 432x368")
     parser.add_argument('--save_video', type=bool, default=False, help="Save the video locally")
-    # parser.add_argument('--video', type=str, default='')
+    parser.add_argument('--video', type=str, default='')
     args = parser.parse_args()
 
     # cap = cv2.VideoCapture(args.video)
     cam = cv2.VideoCapture(args.camera)
 
-    # if args.save_video != '':
-    #     print('Saving the frames at %s' % args.save)
+    if args.save_video != '':
+        print('Saving the frames at %s' % args.save)
     fps_time = 0
     ret_val, image = cam.read()
     logger.info('cam image=%dx%d' % (image.shape[1], image.shape[0]))
@@ -103,18 +103,18 @@ if __name__ == '__main__':
         _, image = cam.read()
         # Get the mode of treatment
         mode = get_key_pressed()
-        # if frames_counter % 3 == 0:
-        #     output, texts = applications[mode](image)
-        #     fps = 1.0 / (now - fps_time)
-        #     # Show capture info on image
-        #     cv2.putText(output, "FPS: %f Mode Detection : %s" % (fps, mode), (10, 10), font, 0.5, green, 2)
-        #     cv2.imshow('computation result', output)
-        #     print(texts)
+        if frames_counter % 3 == 0:
+            output, texts = applications[mode](image)
+            fps = 1.0 / (now - fps_time)
+            # Show capture info on image
+            cv2.putText(output, "FPS: %f Mode Detection : %s" % (fps, mode), (10, 10), font, 0.5, green, 2)
+            cv2.imshow('computation result', output)
+            print(texts)
 
         say("bonjour je suis un ordinateur avec une voix nulle")
         frames_counter += 1
 
-        ## Leave the loop is q is pressed
+        # Leave the loop is q is pressed
         if (cv2.waitKey(1) & 0xFF) == ord('q'):
             break
 
