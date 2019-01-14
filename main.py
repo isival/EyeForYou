@@ -8,7 +8,7 @@ import logging
 import pyttsx3
 import sys
 
-## OpenCV constant initialization
+# OpenCV constant initialization
 font = cv2.FONT_HERSHEY_SIMPLEX
 green = (0, 255, 0)
 
@@ -21,7 +21,7 @@ ch.setFormatter(formatter)
 logger.addHandler(ch)
 
 sys.path.append('./object_detection/')
-from yolo import yolo
+# from yolo import yolo
 
 
 def read_text(image):
@@ -44,18 +44,14 @@ def nothing(image):
 
 
 def say(text):
-    '''engine = pyttsx3.init()
-    engine.say("Object Recognized " + text)
-    a=engine.runAndWait()'''
     engine = pyttsx3.init()
-    rate = engine.getProperty('rate')
-    engine.setProperty('rate', rate)
-    voices = engine.getProperty('voices')
-    # for voice in voices:
-    engine.setProperty('voice', 'english-us')
+    # Rate of speak determined via trial and error
+    rate =  120
+    engine.setProperty("rate", rate)
+    engine.setProperty("voice", "french")
     # print voice.id
-    engine.say('Object Recognized' + text)
-    a = engine.runAndWait()  # blocks
+    engine.say(text)
+    a = engine.runAndWait()
 
 
 applications = {
@@ -93,8 +89,8 @@ if __name__ == '__main__':
     # cap = cv2.VideoCapture(args.video)
     cam = cv2.VideoCapture(args.camera)
 
-    if args.save_video != '':
-        print('Saving the frames at %s' % args.save)
+    # if args.save_video != '':
+    #     print('Saving the frames at %s' % args.save)
     fps_time = 0
     ret_val, image = cam.read()
     logger.info('cam image=%dx%d' % (image.shape[1], image.shape[0]))
@@ -107,14 +103,15 @@ if __name__ == '__main__':
         _, image = cam.read()
         # Get the mode of treatment
         mode = get_key_pressed()
-        if frames_counter % 3 == 0:
-            output, texts = applications[mode](image)
-            fps = 1.0 / (now - fps_time)
-            # Show capture info on image
-            cv2.putText(output, "FPS: %f Mode Detection : %s" % (fps, mode), (10, 10), font, 0.5, green, 2)
-            cv2.imshow('computation result', output)
-            print(texts)
+        # if frames_counter % 3 == 0:
+        #     output, texts = applications[mode](image)
+        #     fps = 1.0 / (now - fps_time)
+        #     # Show capture info on image
+        #     cv2.putText(output, "FPS: %f Mode Detection : %s" % (fps, mode), (10, 10), font, 0.5, green, 2)
+        #     cv2.imshow('computation result', output)
+        #     print(texts)
 
+        say("bonjour je suis un ordinateur avec une voix nulle")
         frames_counter += 1
 
         ## Leave the loop is q is pressed
