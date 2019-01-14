@@ -98,6 +98,7 @@ if __name__ == '__main__':
     # Default Mode
     mode = "nothing"
     while True:
+        now = time.time()
         # Capturing the frame:
         ret_val, image = cam.read()
         # Get the mode of treatment
@@ -105,7 +106,8 @@ if __name__ == '__main__':
         if frames_counter % 3 == 0:
             output, texts = applications[mode](image)
 
-            cv2.putText(output, "FPS: %f Mode Detection : %s" % ((1.0 / (time.time() - fps_time)), Mode), (10, 10),
+            fps = 1.0/(now - fps_time)
+            cv2.putText(output, "FPS: %f Mode Detection : %s" % (fps, mode), (10, 10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
             cv2.imshow('computation result', output)
             print(texts)
